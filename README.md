@@ -12,7 +12,7 @@ values from January 1990 up to March 2023.
 
 IPI series for wine production           |  Decomposition of additive time series
 :-------------------------:|:-------------------------:
-![](https://github.com/gbrugere/Time_Series/blob/main/image/plot(x).png)  |  ![](https://github.com/gbrugere/Time_Series/blob/main/image/plot(decompose(x)).png)
+![](https://github.com/gbrugere/Time_Series/blob/main/image/plot(x).png)  |  ![](https://github.com/gbrugere/Time_Series/blob/main/image/plot(decompose(x))2.png)
 
 We are working under the assumption that the series is already corrected
 for seasonal variation and will not take this phenomenon into account.
@@ -22,8 +22,9 @@ corresponding to 2001, 2008 (subprime crisis) and 2020 (covid crisis).
 
 Theses two remarks can be verified by checking the ACF and PACF plots
 for the data.
-
-![image](https://github.com/gbrugere/Time_Series/blob/main/image/acf(x).png) ![image](https://github.com/gbrugere/Time_Series/blob/main/image/pacf(x).png)
+ACF          |  PACF
+:-------------------------:|:-------------------------:
+![image](https://github.com/gbrugere/Time_Series/blob/main/image/acf(x).png) | ![image](https://github.com/gbrugere/Time_Series/blob/main/image/pacf(x).png)
 
 The PACF does not show periodicity, indicating that the series is not
 seasonal.
@@ -41,9 +42,10 @@ In order to test this series for stationnary, we compute the Augmented
 Dickey-Fuller Test (ADF) and the Kwiatkowski-Phillips-Schmidt-Shin Test
 (KPSS).\
 
-![image](https://github.com/gbrugere/Time_Series/blob/main/image/adf(x).png) ![image](https://github.com/gbrugere/Time_Series/blob/main/image/kpss(x).png)
-
-![image](https://github.com/gbrugere/Time_Series/blob/main/image/adf(xstat).png) ![image](https://github.com/gbrugere/Time_Series/blob/main/image/kpss(xstat).png)
+ADF          |  KPSS
+:-------------------------:|:-------------------------:
+![image](https://github.com/gbrugere/Time_Series/blob/main/image/adf(x).png) | ![image](https://github.com/gbrugere/Time_Series/blob/main/image/kpss(x).png)
+![image](https://github.com/gbrugere/Time_Series/blob/main/image/adf(xstat).png) | ![image](https://github.com/gbrugere/Time_Series/blob/main/image/kpss(xstat).png)
 
 As we can see,the ADF test, which tests for the presence of unit root
 against stationarity, is 0.05 for $x$, has a p-value of which makes it
@@ -64,7 +66,9 @@ series seems intuitively more stationary than the initial one. We may
 also notice that, due to the differenciation, the mean of $xstat$ is
 equal to $0$.
 
-![image](https://github.com/gbrugere/Time_Series/blob/main/image/plot(x).png) ![image](https://github.com/gbrugere/Time_Series/blob/main/image/plot(xstat).png)
+Plot of $x$        | Plot of $xstat$
+:-------------------------:|:-------------------------:
+![image](https://github.com/gbrugere/Time_Series/blob/main/image/plot(x).png) | ![image](https://github.com/gbrugere/Time_Series/blob/main/image/plot(xstat).png)
 
 # Part II: : ARMA models
 
@@ -73,7 +77,9 @@ equal to $0$.
 In order to find the ARMA model parameters, we first need to plot the
 ACF and PACF for $xstat$.
 
-![image](https://github.com/gbrugere/Time_Series/blob/main/image/acf(xstat).png) ![image](https://github.com/gbrugere/Time_Series/blob/main/image/pacf(xstat).png)
+ACF $xtstat$         | PACF $xstat$
+:-------------------------:|:-------------------------:
+![image](https://github.com/gbrugere/Time_Series/blob/main/image/acf(xstat).png) | ![image](https://github.com/gbrugere/Time_Series/blob/main/image/pacf(xstat).png)
 
 As the can see, the last significant lag for ACF is the $14^{th}$, so
 $q = 14-1 = 13$, and the last significant lag for PACF is the $7^{th}$,
@@ -81,8 +87,9 @@ so $p = 7$.
 
 We then minimise the BIC and AIC criterions by finding out the minimum
 of the coefficient for the BIC and AIC matrix.
-
-![image](https://github.com/gbrugere/Time_Series/blob/main/image/AICmatrix.png) ![image](https://github.com/gbrugere/Time_Series/blob/main/image/BICmatrix.png)
+AIC matrix        | BIC matrix
+:-------------------------:|:-------------------------:
+![image](https://github.com/gbrugere/Time_Series/blob/main/image/AICmatrix.png) | ![image](https://github.com/gbrugere/Time_Series/blob/main/image/BICmatrix.png)
 
 The minimisation of the coefficient provides us with two potential
 couples : $(p,q) = (1,2)$ and $(p,q) = (5,3)$
@@ -204,9 +211,9 @@ We used several asumptions in order to obtain this results :
 
 ## Graphically represent this region for $\alpha$= 95%. Comment on it.
 
-::: center
+
 ![image](https://github.com/gbrugere/Time_Series/blob/main/image/plot_arima.png)
-:::
+
 
 This graph represents the tail of the time series $x$ understudy,
 followed by two blue points which are the two next prediction under the
