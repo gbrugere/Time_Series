@@ -40,7 +40,7 @@ initial series and $xstat$ the corrected, stationary series.
 
 In order to test this series for stationnary, we compute the Augmented
 Dickey-Fuller Test (ADF) and the Kwiatkowski-Phillips-Schmidt-Shin Test
-(KPSS).\
+(KPSS).
 
 ADF          |  KPSS
 :-------------------------:|:-------------------------:
@@ -117,86 +117,122 @@ $X_t = \phi_1 X_{t-1}  +  \epsilon_{t}  - \psi_1 \epsilon_{t-1} -  \psi_2 \epsil
 
 ## Write the equation satisfied by the confidence region of level α on the future values 
 
-Our model follows an ARMA(1,2), thus we consider the following equation
-:
+Our model follows an ARMA(1,2), thus we consider the following equation:
 
-$$X_T = \phi_1X_{T-1} + \epsilon_T - \psi_1\epsilon_{T-1} -\psi_2\epsilon_{T-2}$$
-In addition we know that : $\forall h>0$
-$\mathbb{E}[\epsilon_{T + H} | X_T, X_{T-1}, ...] = 0$, we get the
-following calculations:\
+```math
+X_T = \phi_1X_{T-1} + \epsilon_T - \psi_1\epsilon_{T-1} -\psi_2\epsilon_{T-2}
+```
+In addition we know that: 
+```math
+\mathbb{E}[\epsilon_{T + H} | X_T, X_{T-1}, ...] = 0 \; ,\forall h>0
+```
+we get the following calculations:
 
-$\begin{aligned}
+```math
+\begin{aligned}
   \hat{X}_{T+1} &= \mathbb{E}[X_{T+1} | X_T, X_{T-1}, ...] \\
   &= \mathbb{E}[\phi_1X_{T} + \epsilon_{T+1} - \psi_1\epsilon_{T} -\psi_2\epsilon_{T-1} | X_T, X_{T-1}, ...] \\
   &= \mathbb{E}[\phi_1X_{T} - \psi_1\epsilon_{T} -\psi_2\epsilon_{T-1} | X_T, X_{T-1}, ...] \\
   &= \phi_1X_{T} - \psi_1\epsilon_{T} -\psi_2\epsilon_{T-1}\\
-\end{aligned}$ And :\
-$\begin{aligned}
+\end{aligned}
+```
+
+And:
+
+```math
+\begin{aligned}
   \hat{X}_{T+2} &= \mathbb{E}[X_{T+2} | X_T, X_{T-1}, ...] \\
   &= \mathbb{E}[\phi_1X_{T+1} + \epsilon_{T+2} - \psi_1\epsilon_{T+1} -\psi_2\epsilon_{T} | X_T, X_{T-1}, ...] \\
   &= \mathbb{E}[\phi_1X_{T+1} -\psi_2\epsilon_{T} | X_T, X_{T-1}, ...] \\
   &= \mathbb{E}[\phi_1X_{T+1} | X_T, X_{T-1}, ...] - \psi_2\epsilon_{T} \\
-  &= \phi_1\hat{X}_{T+1} - \psi_2\epsilon_{T} \\
+  &= \phi_1\hat{X}_{T+1} - \psi_2\epsilon_{T}
 \end{aligned}
-\\
-$\
-Let : $\mathbb{X}_T = \begin{pmatrix} X_{T+1} \\ X_{T+2} \end{pmatrix}$
-and
-$\mathbb{\hat{X}}_T = \begin{pmatrix} \hat{X}_{T+1} \\ \hat{X}_{T+2} \end{pmatrix}$\
-Then :\
-$\begin{aligned}
+```
+
+Let:
+```math
+\mathbb{X}_T = \begin{pmatrix} X_{T+1} \\ X_{T+2} \end{pmatrix} \;, \; \mathbb{\hat{X}}_T = \begin{pmatrix} \hat{X}_{T+1} \\ \hat{X}_{T+2} \end{pmatrix}$
+```
+
+Then:
+
+```math
+\begin{aligned}
   \mathbb{X}_T - \mathbb{\hat{X}}_T &= \begin{pmatrix} X_{T+1} - \hat{X}_{T+1} \\ X_{T+2} - \hat{X}_{T+2} \end{pmatrix} \\
   &= \begin{pmatrix} (\phi_1X_{T} + \epsilon_{T+1} - \psi_1\epsilon_{T} -\psi_2\epsilon_{T-1}) - (\phi_1X_{T} - \psi_1\epsilon_{T} -\psi_2\epsilon_{T-1}) \\
   (\phi_1X_{T+1} + \epsilon_{T+2} - \psi_1\epsilon_{T+1} -\psi_2\epsilon_{T}) - (\phi_1\hat{X}_{T+1} - \psi_2\epsilon_{T}) \end{pmatrix} \\
   &= \begin{pmatrix} \epsilon_{T+1} \\ \epsilon_{T+2} + \phi_1(X_{T+1} - \hat{X}_{T+1}) - \psi_1\epsilon_{T+1}  \end{pmatrix} \\
-  &= \begin{pmatrix} \epsilon_{T+1} \\ \epsilon_{T+2} + (\phi_1 - \psi_1)\epsilon_{T+1} \end{pmatrix} \\
-\end{aligned}$\
-\
-In fine, we have this equation :
-$$\mathbb{X}_T - \mathbb{\hat{X}}_T =  \begin{bmatrix} 1 & 0 \\ \phi_1 - \psi_1 & 1 \end{bmatrix}
-    \begin{pmatrix}\epsilon_{T+1} \\ \epsilon_{T+2} \end{pmatrix}$$
-According to the guidelines: $(\epsilon_{t})_{t \in \mathbf{N}}$ are
-Gaussian and i.i.d. Thus:\
+  &= \begin{pmatrix} \epsilon_{T+1} \\ \epsilon_{T+2} + (\phi_1 - \psi_1)\epsilon_{T+1} \end{pmatrix}
+\end{aligned}
+```
 
-::: center
-$\begin{pmatrix}\epsilon_{T+1} \\ \epsilon_{T+2} \end{pmatrix} \sim \mathcal{N}_2(0,\,\begin{pmatrix}
+In fine, we have this equation:
+
+```math
+\mathbb{X}_T - \mathbb{\hat{X}}_T =  \begin{bmatrix} 1 & 0 \\ \phi_1 - \psi_1 & 1 \end{bmatrix}
+    \begin{pmatrix}\epsilon_{T+1} \\ \epsilon_{T+2} \end{pmatrix}
+```
+
+According to the guidelines: $(\epsilon_{t})_{t \in \mathbf{N}}$ are Gaussian and i.i.d. Thus:
+
+```math
+\begin{pmatrix}\epsilon_{T+1} \\ \epsilon_{T+2} \end{pmatrix} \sim \mathcal{N}_2(0,\,\begin{pmatrix}
 \sigma^{2} & 0 \\ 0 & \sigma^{2}
-\end{pmatrix})$ ,where $\sigma \in \mathbb{R}^*$
-:::
+\end{pmatrix}) \text{, where } \sigma \in \mathbb{R}^*
+```
 
-and so we have :
-$$\mathbb{X}_T - \mathbb{\hat{X}}_T \sim \mathcal{N}_2(\mu,\,\Sigma)$$
-we immediatly have $\mu = 0$ , and : $$\begin{aligned}
+and so we have:
+
+```math
+\mathbb{X}_T - \mathbb{\hat{X}}_T \sim \mathcal{N}_2(\mu,\,\Sigma)
+```
+
+we immediately have $\mu = 0$, and:
+
+```math
+\begin{aligned}
 \mathbb{V}[\mathbb{X}_T - \mathbb{\hat{X}}_T] &= \begin{bmatrix} 1 & 0 \\ \phi_1 - \psi_1 & 1 \end{bmatrix}^{T}
 \begin{pmatrix}
 \sigma^{2} & 0 \\ 0 & \sigma^{2}
 \end{pmatrix}
 \begin{bmatrix} 1 & 0 \\ \phi_1 - \psi_1 & 1 \end{bmatrix}^{T}
-
-= \sigma^{2}\begin{pmatrix}
+\\
+&= \sigma^{2}\begin{pmatrix}
 1 + (\phi_1 - \psi_1)^{2} & \phi_1 - \psi_1 \\
 \phi_1 - \psi_1 & 1
 \end{pmatrix}
-\end{aligned}$$
+\end{aligned}
+```
 
-$$\Sigma = \sigma^{2}\begin{pmatrix}
+```math
+\Sigma = \sigma^{2}\begin{pmatrix}
 1 + (\phi_1 - \psi_1)^{2} & \phi_1 - \psi_1 \\
 \phi_1 - \psi_1 & 1
-\end{pmatrix}$$\
-Moreover $\Sigma$ is a positive-definite matrix and therefore is
-invertible and admits a square root\
-which we will note : $\Sigma^{\frac{1}{2}}$
+\end{pmatrix}
+```
 
-Thus :
-$$\Vert(\Sigma^{-\frac{1}{2}}(\mathbb{X}_T - \mathbb{\hat{X}}_T))\Vert_{2}^{2} \sim \chi^{2}(2)$$
-i.e :
-$$(\mathbb{X}_T - \mathbb{\hat{X}}_T)^T\Sigma^{-1}(\mathbb{X}_T - \mathbb{\hat{X}}_T) \sim \chi^{2}(2)$$
+Moreover $\Sigma$ is a positive-definite matrix and therefore is invertible and admits a square root which we will note: $\Sigma^{\frac{1}{2}}$
 
-So the confidence region of level $\alpha$ of $(X_{T+1}, X_{T+2})$ is :
-$$\{X \in \mathbb{R}^{2} | (X-\hat{X})^T\Sigma(X-\hat{X}) \leq q_{1 - \alpha} \}$$
+Thus:
 
-where $(q_{\alpha})_{\alpha \in [0, 1]}$ represent the quantiles of
-order $\alpha$ of the $\chi^{2}(2)$ law
+```math
+\Vert(\Sigma^{-\frac{1}{2}}(\mathbb{X}_T - \mathbb{\hat{X}}_T))\Vert_{2}^{2} \sim \chi^{2}(2)
+```
+
+i.e:
+
+```math
+(\mathbb{X}_T - \mathbb{\hat{X}}_T)^T\Sigma^{-1}(\mathbb{X}_T - \mathbb{\hat{X}}_T) \sim \chi^{2}(2)
+```
+
+So the confidence region of level $\alpha$ of $(X_{T+1}, X_{T+2})$ is:
+
+```math
+\{X \in \mathbb{R}^{2} | (X-\hat{X})^T\Sigma(X-\hat{X}) \leq q_{1 - \alpha} \}
+```
+
+where $(q_{\alpha})_{\alpha \in [0, 1]}$ represent the quantiles of order $\alpha$ of the $\chi^{2}(2)$ law
+
 
 ## Give the hypotheses used to get this region
 
