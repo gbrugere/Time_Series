@@ -10,7 +10,9 @@ INSEE website. Following the assigment, our series is corrected from
 seasonal variations and working days. The series is monthly, with 399
 values from January 1990 up to March 2023.
 
-![image](https://github.com/gbrugere/Time_Series/blob/main/image/plot(x).png) ![image](https://github.com/gbrugere/Time_Series/blob/main/image/plot(decompose(x)).png)
+IPI series for wine production           |  Decomposition of additive time series
+:-------------------------:|:-------------------------:
+![](https://github.com/gbrugere/Time_Series/blob/main/image/plot(x).png)  |  ![](https://github.com/gbrugere/Time_Series/blob/main/image/plot(decompose(x)).png)
 
 We are working under the assumption that the series is already corrected
 for seasonal variation and will not take this phenomenon into account.
