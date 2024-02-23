@@ -14,7 +14,7 @@ library(forecast)
 
 ```{r}
 
-data <- read.csv("C:/Users/MI/Downloads/données.csv",skip = 3, header = TRUE,sep=";")
+data <- read.csv("C:/Users/MI/Downloads/donnÃ©es.csv",skip = 3, header = TRUE,sep=";")
 
 x <- ts(rev(data$X), start = c(1990,1), frequency = 12)
 
