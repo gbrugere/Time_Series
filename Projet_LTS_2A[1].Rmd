@@ -1,0 +1,126 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+
+library(tseries)
+library(stats)
+library(forecast)
+
+```
+
+
+
+```{r}
+
+data <- read.csv("C:/Users/MI/Downloads/données.csv",skip = 3, header = TRUE,sep=";")
+
+x <- ts(rev(data$X), start = c(1990,1), frequency = 12)
+
+plot(x)
+plot(decompose(x))
+acf(x)
+pacf(x)
+
+print(x)
+print(length(x))
+
+```
+```{r}
+xstat <- diff(x)
+plot(xstat)
+
+plot(decompose(x))
+plot(decompose(xstat))
+acf(x)
+acf(xstat)
+```
+```{r}
+acf(xstat)
+pacf(xstat)
+
+```
+a
+```{r}
+
+adf.test(x)
+kpss.test(x)
+
+adf.test(xstat)
+kpss.test(xstat)
+
+
+```
+```{r}
+plot(x)
+plot(xstat)
+```
+
+
+
+
+```{r}
+pmax = 7
+qmax = 13
+
+aic_matrix <- matrix(nrow = pmax+1, ncol = qmax+1)
+bic_matrix <- matrix(nrow = pmax+1, ncol = qmax+1)
+
+for (AR in 0:pmax) {
+    for (MA in 0:qmax) {
+            model <- arima(xstat, order = c(AR, 0, MA))
+            AIC <- AIC(model)
+            BIC <- BIC(model)
+            aic_matrix[AR+1,MA+1] <- AIC
+            bic_matrix[AR+1,MA+1] <- BIC
+        }
+}
+
+print(aic_matrix)
+print(bic_matrix)
+
+print(min(aic_matrix))
+print(min(bic_matrix))
+
+indaic <- which(aic_matrix == min(aic_matrix), arr.ind = TRUE)
+indbic <- which(bic_matrix == min(bic_matrix), arr.ind = TRUE)
+
+print(indaic)
+print(indbic)
+```
+
+```{r}
+model1 <- arima(xstat, order = c(5,0,3))
+model2 <- arima(xstat, order = c(1,0,2))
+
+checkresiduals(model1)
+checkresiduals(model2)
+
+Box.test(residuals(model1), lag = 1, type = "Ljung-Box")
+Box.test(residuals(model2), lag = 1, type = "Ljung-Box")
+
+
+lagcorr <- data.frame(lags = c(1:20))
+lagcorr$p_value_1 = NA
+lagcorr$p_value_2 = NA
+
+for (i in 1:20) {
+  
+  p_value_1 = Box.test(residuals(model1), lag = i, type = "Ljung-Box")$p.value
+  p_value_2 = Box.test(residuals(model2), lag = i, type = "Ljung-Box")$p.value
+  
+  lagcorr$p_value_1[lagcorr$lags == i ]=p_value_1
+  lagcorr$p_value_2[lagcorr$lags == i ]=p_value_2
+}
+print(lagcorr)
+
+
+```
+
+```{r}
+model_arima =  arima(x, order = c(1,1,2))
+
+forecast95 <- forecast(model_arima, h = 2, level = 0.95)
+plot(forecast95, , xlim=c(2020,2024))
+```
